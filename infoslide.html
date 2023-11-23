@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content="Info skærm for Løget By"/>
+    <meta name="author" content="Brian Kristensen"/>
+    <title>Info Skærm</title>
+    <link class="svglogo" rel="icon" type="image/x-icon" href="data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 452 452' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' xml:space='preserve' xmlns:serif='http://www.serif.com/' style='fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:1.41421;'%3E%3Cg transform='matrix(1.17037,0,0,1.17037,-1115.2,-382.3)'%3E%3Cpath d='M1338.57,519.505C1338.57,625.303 1251.51,712.362 1145.71,712.362C1039.92,712.362 952.857,625.303 952.857,519.505C952.857,413.707 1039.92,326.648 1145.71,326.648C1251.51,326.648 1338.57,413.707 1338.57,519.505L1338.57,519.505Z' style='fill:rgb(51,102,204);fill-rule:nonzero;'/%3E%3C/g%3E%3Cg transform='matrix(3.14355,0,0,3.14355,-7587.14,782.282)'%3E%3Cpath d='M2494.29,-197.591L2494.29,-123.719L2476.43,-123.719L2476.43,-197.591L2494.29,-197.591' style='fill:white;fill-rule:nonzero;'/%3E%3Cg transform='matrix(0.318111,0,0,0.318111,2440.91,-251.447)'%3E%3Cpath d='M174.804,101.287C174.804,120.524 158.974,136.354 139.737,136.354C120.499,136.354 104.669,120.524 104.669,101.287C104.669,82.049 120.499,66.219 139.737,66.219C158.974,66.219 174.804,82.049 174.804,101.287Z' style='fill:white;fill-rule:nonzero;'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"/>
+    <!-- CSS Custom -->
+    <style>
+        :root {
+            --ratio: calc(9/16);
+            --slidewidth: min(calc(100vw), calc(100vh) / var(--ratio));
+            --slideheight: calc(var(--slidewidth) * var(--ratio));
+            --slidetop: calc((100vh - var(--slideheight)) / 2);
+            --slideleft: calc((100vw - var(--slidewidth)) / 2);
+            --scale: calc(var(--slidewidth) / 980);
+            margin: 0px;
+            padding: 0px;
+        }
+        body {
+            margin: 0px;
+            padding: 0px;
+            overflow: hidden;
+            background-color: black;
+        }
+        .info_slides {
+            margin: 0px;
+            padding: 0px;
+            width: 100vw;
+            height: 106vh;
+            border: 0;
+            animation: fadeIn 5s forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+              to { opacity: 1; }
+        }
+        .timer_div {
+            margin: 0px;
+            padding: 0px;
+            position: absolute;
+            z-order: 10;
+        }
+        .timer_div > .timer_clock {
+            position: relative;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: calc(var(--scale) * 1rem);
+            text-align: center;
+            left: calc(var(--slideleft));
+            width: calc(var(--slidewidth));
+            top: calc((var(--slideheight) * 0.965) + var(--slidetop));
+            color: white;
+        }
+        .date_label, .time_label {
+            position: absolute;
+            width: calc(var(--slidewidth)/2);
+            top: 0px;
+        }
+        .date_label {
+            left: 0px;
+        }
+        .time_label {
+            left: calc(var(--slidewidth)/2);
+        }
+    </style>
+</head>
+<body>
+    <div class="timer_div"><div class="timer_clock">
+        <div class="date_label"></div>
+        <div class="time_label"></div>
+    </div></div>
+    <iframe
+        class="info_slides"
+        frameborder="0" width="100%" height="100%"
+        allowfullscreen="true"
+        mozallowfullscreen="true"
+        webkitallowfullscreen="true">
+    </iframe>
+
+    <script type="application/javascript">
+        const slideFrame = document.querySelector('.info_slides');
+        const logoSvg = document.querySelector('.svglogo').getAttribute('href');
+        const months = ["Januar", "Februar", "Marts", "April", "Maj", "Juni", "Juli", "August", "September", "Oktober", "November", "December"];
+        const weekdays = ["Søndag", "Mandag", "Tirsdag", "Onsdag", "Torsdag", "Fredag", "Lørdag"];
+        const slidesId = "2PACX-1vS06__g-z1kv284ag7Kuvvc0pG9m1VBoOOma1RCOORBm9-pqqyd3t9MEF72wvjKZiw_sGD-iHi9fbIn";
+        const duration = "20000";
+        const slidesUrl = "https://docs.google.com/presentation/d/e/" +
+            slidesId + "/embed?start=true&loop=true&delayms=" + duration;
+
+        function refreshFrame() {
+            slideFrame.contentWindow.location.reload()
+        }
+
+        function loadSlides() {
+            slideFrame.src = slidesUrl;
+        }
+
+        function updateDateTime() {
+            const now = new Date();
+            const month = months[now.getMonth()];
+            const weekday = weekdays[now.getDay()];
+            document.querySelector('.date_label').textContent = weekday+' den '+now.getDate()+'. '+month+' '+now.getFullYear();
+            document.querySelector('.time_label').textContent = 'Kl: '+now.toLocaleTimeString();
+        }
+
+        function reloadSlides() {
+            location.reload();
+        }
+
+        loadSlides();
+
+        setInterval(updateDateTime, 1000);
+        setInterval(reloadSlides, 1000 * 30);
+    </script>
+</body>
+</html>

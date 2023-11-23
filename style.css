@@ -1,0 +1,44 @@
+:root {
+    --ratio: calc(9/16);
+    --slidewidth: min(calc(100vw), calc(100vh) / var(--ratio));
+    --slideheight: calc(var(--slidewidth) * var(--ratio));
+    --slidetop: calc((100vh - var(--slideheight)) / 2);
+    --slideleft: calc((100vw - var(--slidewidth)) / 2);
+    --scale: calc(var(--slidewidth) / 980);
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+    margin: 0px;
+    padding: 0px;
+    overflow: hidden;
+    background-color: black;
+    background-image: url("logo.svg");
+    background-repeat: no-repeat;
+    background-position: center; /* Center the image */
+    background-size: calc(var(--slidewidth) / 3), calc(var(--slidewidth) / 3);
+}
+iframe {
+    margin: 0px;
+    padding: 0px;
+    width: 100vw;
+    height: 106vh;
+    border: 0;
+}
+.timer_div {
+    margin: 0px;
+    padding: 0px;
+    position: absolute;
+    z-order: 10;
+}
+
+.timer_div > .timer_clock {
+    position: relative;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: calc(var(--scale) * 1rem);
+    left: calc((var(--slidewidth) * 0.02) + var(--slideleft));
+    top: calc((var(--slideheight) * 0.965) + var(--slidetop));
+    color: white;
+}
+
